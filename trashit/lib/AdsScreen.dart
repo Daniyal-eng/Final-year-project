@@ -1,24 +1,20 @@
+import 'package:Trashit/Methods.dart';
 import 'package:flutter/material.dart';
-import 'Methods.dart';
 
-
-
-class OrderScreen extends StatelessWidget {
-  const OrderScreen
-({ Key? key }) : super(key: key);
+class AdsScr extends StatelessWidget {
+  const AdsScr({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner:false ,
-      home: Scaffold(
-       // extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
+     debugShowCheckedModeBanner: false,
+     home: Scaffold(
+        backgroundColor: Colors.white,
       appBar: AppBar(
         
         backgroundColor: Colors.lightGreen,
         centerTitle: true,
-        title: Text("Place Order",style: TextStyle(color: Colors.black),),
+        title: Text("Post Ad",style: TextStyle(color: Colors.black),),
         actions: [
           GestureDetector(
               onTap:(){
@@ -31,40 +27,27 @@ class OrderScreen extends StatelessWidget {
             )
         ]//actions
       ),
-         body:MyCustomForm(),
-
-      ),
+      body: AdForm(),
+     ),
     );
   }
 }
-
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({ Key? key }) : super(key: key);
+class AdForm extends StatefulWidget {
+  const AdForm({ Key? key }) : super(key: key);
 
   @override
-  _MyCustomFormState createState() => _MyCustomFormState();
+  _AdFormState createState() => _AdFormState();
 }
 
-class _MyCustomFormState extends State<MyCustomForm> {
-  final _formKey = GlobalKey<FormState>();  
+class _AdFormState extends State<AdForm> {
+  final _formKey = GlobalKey<FormState>(); 
   @override
- void initState() {
+  void initState() {
     // TODO: implement initState
     super.initState();
   }
-
-  late String category_id;
-  List<String> category = [
-    "Solid/household waste",
-    "Medical/clinical waste",
-    "Hazardous waste",
-    "Electrical waste",
-    "industrial waste",
-    "Agricultural waste",
-  ];
-
   Widget build(BuildContext context) {
-    return Form(  
+     return Form(  
       key: _formKey,  
       child: Column(  
         crossAxisAlignment: CrossAxisAlignment.start,  
@@ -127,7 +110,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
  TextFormField(  
             decoration: const InputDecoration(  
-            icon: const Icon(Icons.delete), 
+            icon: const Icon(Icons.delete),
             hintText: 'Waste category',  
             labelText: 'Waste type',  
             
@@ -144,7 +127,7 @@ TextFormField(
             decoration: const InputDecoration(  
             icon: const Icon(Icons.code),  
             hintText: 'Description(Optional)',  
-            labelText: 'description',  
+            labelText: 'Descrition',  
             
             ),  
           
@@ -155,7 +138,6 @@ TextFormField(
               return null;  
             },  
            ),  
-           
     /* DropDownFormField(
                 onValueChanged: (dynamic value) {
                   category_id= value;
@@ -170,7 +152,7 @@ TextFormField(
           new Container(  
               padding: const EdgeInsets.only(left: 120.0, top: 40.0),  
               child: new RaisedButton(  
-                child: const Text('Place order'),  
+                child: const Text('Post Ad'),  
                   onPressed: (){
                      if (_formKey.currentState!.validate()) {  
                     // If the form is valid, display a Snackbar.  
@@ -181,8 +163,6 @@ TextFormField(
               )),  
         ],  
       ),  
-    );  
-       
+    );
   }
 }
-

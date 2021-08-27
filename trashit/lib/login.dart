@@ -163,6 +163,27 @@ class _LoginScreenState extends State<LoginScreen> {
           });
         } else {
           print("Please fill form correctly");
+          showDialog(context: context, builder: (contxt)
+              {
+                     return AlertDialog(
+                       shape:RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(15)
+                       ),
+                      title:Text('Error'),
+                      content: Text('Please provide valid email & password'),
+                      actions: [
+                        FlatButton(onPressed: (){
+                          Navigator.of(contxt).pop();
+                        }, child: Text('Cancel')),
+                         FlatButton(onPressed: (){
+                        _email.text='';
+                        _password.text='';
+                          Navigator.of(contxt).pop();
+                        }, child: Text('OK'))
+                      ],
+                     );
+              }
+              );
         } 
       },
       child: Container(

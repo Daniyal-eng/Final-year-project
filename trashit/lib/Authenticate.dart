@@ -17,6 +17,3 @@ class Authenticate extends StatelessWidget {
     }
   }
 }
-void getUserid(){
-
-}

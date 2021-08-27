@@ -1,5 +1,5 @@
+import 'package:Trashit/Methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:Trashit/PriceList.dart';
 //import 'package:trashit/PriceList.dart';
@@ -9,15 +9,25 @@ const HomeScreen({ Key? key }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     
-     home:HomePage(),
-     /*  Scaffold(
+     debugShowCheckedModeBanner: false,
+     home: Scaffold(
      appBar: AppBar(  
-     ),
-     body: Center(
-       child: TextButton(onPressed: ()=>logOut(context), child: Text('logOut'))
-     ),
-    ), */
+       centerTitle:true,
+       backgroundColor: Colors.lightGreen,
+        title: Text("Home Screen",style: TextStyle(color: Colors.black),),
+        actions: [
+          GestureDetector(
+              onTap:(){
+         logOut(context);
+          },
+           child: Padding(padding: EdgeInsets.only(right: 5),
+            child: Icon(Icons.logout_outlined,size: 30,color: Colors.black,
+           ),
+            ),
+            )
+        ]//actions
+    ), 
+    )
     );
   }
 }
@@ -34,8 +44,8 @@ class _HomePageState extends State<HomePage> {
   late String uid;
   final FirebaseAuth auth = FirebaseAuth.instance;
   void getUserId() async { 
-  //final FirebaseUser user = await auth.currentUser(); 
-  //uid = user.uid;
+  final User user = await auth.currentUser!; 
+  uid = user.uid;
   print("User Id : "+uid.toString()); }
   @override
   Widget build(BuildContext context) {

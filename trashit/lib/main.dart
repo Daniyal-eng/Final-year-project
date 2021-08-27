@@ -1,3 +1,5 @@
+import 'package:Trashit/AdsScreen.dart';
+import 'package:Trashit/HomeScreen.dart';
 import 'package:Trashit/OrderScreen.dart';
 import 'package:Trashit/PriceList.dart';
 import 'package:Trashit/login.dart';
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home: LoginScreen(),
+       home:HomeScreen(),
     );
   }
 }
