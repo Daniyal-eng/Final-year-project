@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:Trashit/HomeScreen.dart';
 import 'Methods.dart';
@@ -10,12 +10,26 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  final TextEditingController _name = TextEditingController();
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
-  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  TextEditingController _name = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   bool isLoading = false;
 
+  createData(String name , String email , String pass) async {
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc();
+    Map<String , dynamic> users = {
+    "name": name,
+    "email": email,
+    "password": pass, };
+    print("Data Saved Hogya Mera");
+    documentReference.set(users).whenComplete(() {
+       print("$users Created");
+        }); 
+        }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +43,6 @@ class _CreateAccountState extends State<CreateAccount> {
        backgroundColor: Color(0XFF1fc709),
        //#1fc709
      ), */
-
-
-
       body: isLoading
        ? Center(
               child: Container(
@@ -132,15 +143,17 @@ class _CreateAccountState extends State<CreateAccount> {
           setState(() {
             isLoading = true;
           });
-
+        
           createAccount(_name.text, _email.text, _password.text).then((user) {
             if (user != null) {
               setState(() {
                 isLoading = false;
               });
+              createData(_name.text , _email.text , _password.text);
                Navigator.push(
                    context, MaterialPageRoute(builder: (_) => HomeScreen()));
               print("Account Created Sucessfull");
+
             } else {
               print("SignUp Failed");              
               setState(() {

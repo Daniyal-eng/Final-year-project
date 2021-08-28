@@ -1,16 +1,39 @@
+import 'dart:ffi';
+
 import 'package:Trashit/Methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Trashit/PriceList.dart';
 //import 'package:trashit/PriceList.dart';
-class HomeScreen extends StatelessWidget {
-const HomeScreen({ Key? key }) : super(key: key);
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({ Key? key }) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  String? uid;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  void getUserId() async { 
+  final User user = await auth.currentUser!; 
+  uid = user.uid;
+  print("User Id Yeh Hai : "+uid.toString()); }
+
+
+  @override
+  void initState() { 
+    getUserId();
+    super.initState();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-     debugShowCheckedModeBanner: false,
-     home: Scaffold(
+    return Scaffold(
      appBar: AppBar(  
        centerTitle:true,
        backgroundColor: Colors.lightGreen,
@@ -27,13 +50,12 @@ const HomeScreen({ Key? key }) : super(key: key);
             )
         ]//actions
     ), 
-    )
     );
   }
 }
 
 // ignore: must_be_immutable
-class HomePage extends StatefulWidget {
+/* class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
 
   @override
@@ -41,16 +63,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late String uid;
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  void getUserId() async { 
-  final User user = await auth.currentUser!; 
-  uid = user.uid;
-  print("User Id : "+uid.toString()); }
+  
   @override
   Widget build(BuildContext context) {
     return Container(
       
     );
   }
-}
+} */
+
+/*  */

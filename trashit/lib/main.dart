@@ -9,7 +9,7 @@ import 'package:Trashit/OrderScreen.dart';
 //import 'package:Trashit/PriceList.dart';/import 'package:Trashit/login.dart';
 
 
-Future main() async{
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   runApp(MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home:HomeScreen(),
+       home:LoginScreen(),
     );
   }
 }
