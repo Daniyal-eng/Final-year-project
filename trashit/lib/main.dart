@@ -6,7 +6,7 @@ import 'package:Trashit/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:Trashit/OrderScreen.dart';
-//import 'package:Trashit/PriceList.dart';/import 'package:Trashit/login.dart';
+
 
 
 Future main() async {

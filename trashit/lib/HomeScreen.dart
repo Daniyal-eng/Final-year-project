@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:Trashit/Methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,18 +22,31 @@ class _HomeScreenState extends State<HomeScreen> {
   uid = user.uid;
   print("User Id Yeh Hai : "+uid.toString()); }
 
-
+  static const List<Tab> myTabs = <Tab>[
+    Tab(text: 'Prices'),
+    Tab(text: 'CARDS'),
+  ];
+       late TabController _tabController;
   @override
-  void initState() { 
-    getUserId();
+  void initState() {
+        getUserId();
     super.initState();
-    
+    //_tabController = TabController(vsync: this, length: myTabs.length);
   }
 
   @override
+   void dispose() {
+   _tabController.dispose();
+   super.dispose();
+ }
+
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(  
+     appBar: AppBar(
+       bottom: TabBar(
+          controller: _tabController,
+          tabs: myTabs,
+        ),
        centerTitle:true,
        backgroundColor: Colors.lightGreen,
         title: Text("Home Screen",style: TextStyle(color: Colors.black),),
@@ -50,26 +62,18 @@ class _HomeScreenState extends State<HomeScreen> {
             )
         ]//actions
     ), 
+        body: TabBarView(
+        controller: _tabController,
+        children: myTabs.map((Tab tab) {
+          final String label = tab.text!.toLowerCase();
+          return Center(
+            child: Text(
+              'This is the $label tab',
+              style: const TextStyle(fontSize: 36),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }
-
-// ignore: must_be_immutable
-/* class HomePage extends StatefulWidget {
-  const HomePage({ Key? key }) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
-} */
-
-/*  */
