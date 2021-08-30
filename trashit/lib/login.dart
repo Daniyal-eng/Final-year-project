@@ -91,9 +91,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: field(size, "password", Icons.lock, _password),
                     ),
                   ),
-                  SizedBox(
+                   SizedBox(
                     height: size.height / 15,
                   ),
+                   
                   customButton(size),
                   SizedBox(
                     height: size.height / 20,
@@ -120,17 +121,17 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () {
         if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
-        /*   setState(() {
+         setState(() {
             isLoading = true;
-          }); */
+          }); 
               
           logIn(_email.text, _password.text).then((user) {
             if (user != null) {
               print("Login Sucessfull");
-              //Text('You are signed in');
-             /*  setState(() {
+              Text('You are signed in');
+               setState(() {
                 isLoading = false;
-              }); */
+              }); 
                Navigator.push(
                    context, MaterialPageRoute(builder: (_) => HomeScreen()));
             } else {
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                          borderRadius: BorderRadius.circular(15)
                        ),
                       title:Text('Error'),
-                      content: Text('Please provide email & password'),
+                      content: Text('Please provide valid email & password'),
                       actions: [
                         FlatButton(onPressed: (){
                           Navigator.of(contxt).pop();
@@ -170,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                          borderRadius: BorderRadius.circular(15)
                        ),
                       title:Text('Error'),
-                      content: Text('Please provide valid email & password'),
+                      content: Text('Please provide email & password'),
                       actions: [
                         FlatButton(onPressed: (){
                           Navigator.of(contxt).pop();

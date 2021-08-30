@@ -31,7 +31,7 @@ dependencies:
   cloud_firestore: 
   google_sign_in: ^5.0.7
   google_sign_in_web: ^0.10.0+2
- 
+  splashscreen:
 
 dev_dependencies:
   flutter_test:

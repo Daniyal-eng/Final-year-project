@@ -3,13 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:Trashit/login.dart';
 
-Future<User?> createAccount(String name, String email ,String password ) async{
+Future<User?> createAccount(String name, String email ,String password ,String Ttype) async{
   
     FirebaseAuth _auth = FirebaseAuth.instance;
      
      
   try{
-          User? user = (await _auth.createUserWithEmailAndPassword(email: email, password: password)).user;
+          User? user = (await _auth.createUserWithEmailAndPassword(email: email, password:password,)).user;
            
            if (user != null) {
       print("Account created Succesfull");

@@ -14,17 +14,19 @@ class _CreateAccountState extends State<CreateAccount> {
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+  TextEditingController _type =TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
   bool isLoading = false;
 
-  createData(String name , String email , String pass) async {
+  createData(String name , String email , String pass,String type) async {
     DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc();
     Map<String , dynamic> users = {
     "name": name,
     "email": email,
-    "password": pass, };
+    "password": pass,
+    "type":type };
     print("Data Saved Hogya Mera");
     documentReference.set(users).whenComplete(() {
        print("$users Created");
@@ -61,7 +63,9 @@ class _CreateAccountState extends State<CreateAccount> {
                     alignment: Alignment.centerLeft,
                     width: size.width / 0.5,
                     child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios), onPressed: (){}),
+                        icon: Icon(Icons.arrow_back_ios), onPressed: (){
+
+                        }),
                   ),
                   SizedBox(
                     height: size.height / 50,
@@ -106,13 +110,27 @@ class _CreateAccountState extends State<CreateAccount> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 18.0),
                     child: Container(
+                      
                       width: size.width,
                       alignment: Alignment.center,
-                      child: field(size, "password", Icons.lock, _password),
+                      child: field(size, "password", Icons.lock, _password,
+                      
+                      ),
+                    ),
+                  ),
+                 /*  SizedBox(
+                    height: size.height / 10,
+                  ), */
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Container(
+                      width: size.width,
+                      alignment: Alignment.center,
+                      child: field(size, "Vendor/User", Icons.person_add_sharp,_type),
                     ),
                   ),
                   SizedBox(
-                    height: size.height / 20,
+                    height: size.height / 15,
                   ),
                   customButton(size),
                   Padding(
@@ -139,17 +157,18 @@ class _CreateAccountState extends State<CreateAccount> {
       onTap: () {
         if (_name.text.isNotEmpty &&
             _email.text.isNotEmpty &&
-            _password.text.isNotEmpty) {
+            _password.text.isNotEmpty
+            && _type.text.isNotEmpty) {
           setState(() {
             isLoading = true;
           });
         
-          createAccount(_name.text, _email.text, _password.text).then((user) {
+          createAccount(_name.text, _email.text, _password.text,_type.text,).then((user) {
             if (user != null) {
               setState(() {
                 isLoading = false;
               });
-              createData(_name.text , _email.text , _password.text);
+              createData(_name.text , _email.text , _password.text,_type.text);
                Navigator.push(
                    context, MaterialPageRoute(builder: (_) => HomeScreen()));
               print("Account Created Sucessfull");
@@ -159,10 +178,49 @@ class _CreateAccountState extends State<CreateAccount> {
               setState(() {
                 isLoading = false;
               });
+              showDialog(context: context, builder: (contxt)
+              {
+                     return AlertDialog(
+                       shape:RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(15)
+                       ),
+                      title:Text('Error'),
+                      content: Text('Please provide valid email & password'),
+                      actions: [
+                        FlatButton(onPressed: (){
+                          Navigator.of(contxt).pop();
+                        }, child: Text('Cancel')),
+                         FlatButton(onPressed: (){
+                        _email.text='';
+                        _password.text='';
+                          Navigator.of(contxt).pop();
+                        }, child: Text('OK'))
+                      ],
+                     );
+              });
             }
           });
         } else {
-          print("Please enter Fields");
+          print("Please enter Fields");showDialog(context: context, builder: (contxt)
+              {
+                     return AlertDialog(
+                       shape:RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(15)
+                       ),
+                      title:Text('Error'),
+                      content: Text('Please fill all the fields'),
+                      actions: [
+                        FlatButton(onPressed: (){
+                          Navigator.of(contxt).pop();
+                        }, child: Text('Cancel')),
+                         FlatButton(onPressed: (){
+                        _email.text='';
+                        _password.text='';
+                          Navigator.of(contxt).pop();
+                        }, child: Text('OK'))
+                      ],
+                     );
+              });
           //Text('Please filled all the fields');
         }
       },

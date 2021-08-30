@@ -62,7 +62,7 @@ createData(String user_name , String user_phone , String user_address,String was
         
         backgroundColor: Colors.lightGreen,
         centerTitle: true,
-        title: Text("Place Order",style: TextStyle(color: Colors.black),),
+        title: Text("Post Ad",style: TextStyle(color: Colors.black),),
         actions: [
           GestureDetector(
               onTap:(){
@@ -86,7 +86,7 @@ createData(String user_name , String user_phone , String user_address,String was
             decoration: const InputDecoration(  
               icon: const Icon(Icons.person),  
               hintText: ' Enter your name',  
-              labelText: 'name',
+              labelText: 'Name',
                 
             ),  
              validator: (value) {  
@@ -189,9 +189,33 @@ TextFormField(
           new Container(  
               padding: const EdgeInsets.only(left: 120.0, top: 40.0),  
               child: new RaisedButton(  
-                child: const Text('Place order'),  
+                child: const Text('Post Ad'),  
                   onPressed: (){
-                     if (_formKey.currentState!.validate()) {  
+                     if (_formKey.currentState!.validate()) {
+                          showDialog(context: context, builder: (contxt)
+              {
+                     return AlertDialog(
+                       shape:RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(10)
+                       ),
+                      title:Text('Ad Successfull'),
+                      content: Text('Your Ad has been posted successfully'),
+                      actions: [
+                        FlatButton(onPressed: (){
+                          Navigator.of(contxt).pop();
+                        }, child: Text('Cancel')),
+                         FlatButton(onPressed: (){
+                        _name.text='';
+                        _phone.text='';
+                        _address.text='';
+                        _wasteAmnt.text='';
+                        _wastetype.text='';
+                        _descrip.text='';
+                          Navigator.of(contxt).pop();
+                        }, child: Text('OK'))
+                      ],
+                     );
+              });
                     // If the form is valid, display a Snackbar.
                      createData(_name.text,_phone.text,_address.text,_wasteAmnt.text,_wastetype.text,_descrip.text);
                     Scaffold.of(context)  

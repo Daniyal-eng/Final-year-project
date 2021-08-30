@@ -24,7 +24,7 @@ class _OrderScrState extends State<OrderScr> {
 
 
 createData(String user_name , String user_phone , String user_address,String waste_amount,String waste_type,String descrip) async {
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('Ads').doc(uid);
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('orders').doc(uid);
     Map<String , dynamic> orders = {
     "name": user_name,
     "phone number": user_phone,
@@ -88,7 +88,7 @@ createData(String user_name , String user_phone , String user_address,String was
             decoration: const InputDecoration(  
               icon: const Icon(Icons.person),  
               hintText: ' Enter your name',  
-              labelText: 'name',
+              labelText: 'Name',
                 
             ),  
              validator: (value) {  
@@ -195,10 +195,36 @@ TextFormField(
                   onPressed: (){
                      if (_formKey.currentState!.validate()) {  
                     // If the form is valid, display a Snackbar.
+                     showDialog(context: context, builder: (contxt)
+              {
+                     return AlertDialog(
+                       shape:RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(10)
+                       ),
+                      title:Text('Order Successfull'),
+                      content: Text('Your order has been placed successfully'),
+                      actions: [
+                        FlatButton(onPressed: (){
+                          Navigator.of(contxt).pop();
+                        }, child: Text('Cancel')),
+                         FlatButton(onPressed: (){
+                        _name.text='';
+                        _phone.text='';
+                        _address.text='';
+                        _wasteAmnt.text='';
+                        _wastetype.text='';
+                        _descrip.text='';
+                          Navigator.of(contxt).pop();
+                        }, child: Text('OK'))
+                      ],
+                     );
+              });
                      createData(_name.text,_phone.text,_address.text,_wasteAmnt.text,_wastetype.text,_descrip.text);
                     Scaffold.of(context)  
-                        .showSnackBar(SnackBar(content: Text('Data is in processing.')));  
-                  }  
+                        .showSnackBar(SnackBar(content: Text('Data is in processing.'))); 
+                        
+                     }
+                  
                   },  
               )),  
         ],  

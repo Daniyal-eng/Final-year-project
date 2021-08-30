@@ -1,5 +1,8 @@
 
+import 'dart:math';
+import 'package:Trashit/AdsScreen.dart';
 import 'package:Trashit/Methods.dart';
+import 'package:Trashit/OrderScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Trashit/PriceList.dart';
@@ -22,31 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
   uid = user.uid;
   print("User Id Yeh Hai : "+uid.toString()); }
 
-  static const List<Tab> myTabs = <Tab>[
-    Tab(text: 'Prices'),
-    Tab(text: 'CARDS'),
-  ];
-       late TabController _tabController;
+       
   @override
   void initState() {
         getUserId();
     super.initState();
     //_tabController = TabController(vsync: this, length: myTabs.length);
   }
-
-  @override
-   void dispose() {
-   _tabController.dispose();
-   super.dispose();
- }
-
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
-       bottom: TabBar(
-          controller: _tabController,
-          tabs: myTabs,
-        ),
        centerTitle:true,
        backgroundColor: Colors.lightGreen,
         title: Text("Home Screen",style: TextStyle(color: Colors.black),),
@@ -62,18 +50,139 @@ class _HomeScreenState extends State<HomeScreen> {
             )
         ]//actions
     ), 
-        body: TabBarView(
-        controller: _tabController,
-        children: myTabs.map((Tab tab) {
-          final String label = tab.text!.toLowerCase();
-          return Center(
-            child: Text(
-              'This is the $label tab',
-              style: const TextStyle(fontSize: 36),
-            ),
-          );
-        }).toList(),
-      ),
-    );
+         
+         //Appbar code
+         
+           body:
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(  
+                    width: 800,
+                    height: 200,
+                          child: Card( 
+                            shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.lightGreen,
+                            child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[             
+                           const ListTile(
+                            leading: Icon(Icons.list_alt_rounded, size: 50),
+                            title: Text('Price List', style: TextStyle(color: Colors.white)),
+                            subtitle: Text('Here you can see rates', style: TextStyle(color: Colors.white)),
+                          ),
+                        
+              
+                        ButtonTheme(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: const Text('View', style: TextStyle(color: Colors.white)),
+                                onPressed: () {
+                                    Navigator.push(context, 
+                                    MaterialPageRoute(builder: (_) => ProductList()));                     
+                                },
+                              ),
+              /*                 FlatButton(
+                                child: const Text('Delete', style: TextStyle(color: Colors.white)),
+                                onPressed: () {}, */
+                            //  ),
+                            ],
+                          ),
+                        ),
+                        
+                    ]
+                            ),
+                          ),
+                      ),
+                      SizedBox(height: 10,),
+Container(  
+                    width: 800,
+                      height: 200,
+                          child: Card( 
+                            shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.lightGreen,
+                            child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[             
+                           const ListTile(
+                            leading: Icon(Icons.shop,size: 50),
+                            title: Text('Order', style: TextStyle(color: Colors.white)),
+                            subtitle: Text('Here you can place your order', style: TextStyle(color: Colors.white)),
+                          ),
+                        
+              
+                        ButtonTheme(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: const Text('Open', style: TextStyle(color: Colors.white)),
+                                onPressed: () {
+                                    Navigator.push(context, 
+                                    MaterialPageRoute(builder: (_) => OrderScr()));                     
+                                },
+                              ),
+              /*                 FlatButton(
+                                child: const Text('Delete', style: TextStyle(color: Colors.white)),
+                                onPressed: () {}, */
+                            //  ),
+                            ],
+                          ),
+                        ),
+                        
+                    ]
+                            ),
+                          ),
+                      ),
+                      SizedBox(height: 10,),
+                  Container(  
+                    width: 800,
+                      height: 200,
+                          child: Card( 
+                            shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.lightGreen,
+                            child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[             
+                           const ListTile(
+                            leading: Icon(Icons.tv, size: 50),
+                            title: Text('Post Ads ', style: TextStyle(color: Colors.white)),
+                            subtitle: Text('Here you can post your Ad', style: TextStyle(color: Colors.white)),
+                          ),
+                        
+              
+                        ButtonTheme(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: const Text('Open', style: TextStyle(color: Colors.white)),
+                                onPressed: () {
+                                    Navigator.push(context, 
+                                    MaterialPageRoute(builder: (_) => AdsScreen()));                     
+                                },
+                              ),
+              /*                 FlatButton(
+                                child: const Text('Delete', style: TextStyle(color: Colors.white)),
+                                onPressed: () {}, */
+                            //  ),
+                            ],
+                          ),
+                        ),
+                        
+                    ]
+                            ),
+                          ),
+                      ),
+                      SizedBox(height: 10,),
+                  ],
+                ),
+              ),    
+      );
   }
 }
