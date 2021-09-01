@@ -2,7 +2,7 @@
     package="com.example.trashit">
    <application
         android:label="trashit"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -38,4 +38,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <!---
+    <uses-permision android:name="android.permission.INTERNET"/>-->
 </manifest>

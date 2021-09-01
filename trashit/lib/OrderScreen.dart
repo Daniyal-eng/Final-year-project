@@ -77,160 +77,170 @@ createData(String user_name , String user_phone , String user_address,String was
             )
         ]//actions
       ),
-       body: Container(child: 
-       Form(  
-      key: _formKey,  
-      child: Column(  
-        crossAxisAlignment: CrossAxisAlignment.start,  
-        children: <Widget>[  
-          TextFormField(  
-            controller: _name,
-            decoration: const InputDecoration(  
-              icon: const Icon(Icons.person),  
-              hintText: ' Enter your name',  
-              labelText: 'Name',
-                
-            ),  
-             validator: (value) {  
-              if (value!.isEmpty) {  
-                return 'Please enter your name';  
-              }  
-              return null;  
-            },  
-          ),  
-          TextFormField(  
-          controller: _phone,
-            decoration: const InputDecoration(  
-              icon: const Icon(Icons.phone),  
-              hintText: ' enter your phone number',  
-              labelText: 'Phone',  
-            ),  
-             validator: (value) {  
-              if (value!.isEmpty) {  
-                return 'Please valid phone number';  
-              }  
-              return null;  
-            },  
-           ),  
-            
-          TextFormField(  
-            controller: _address,
-            decoration: const InputDecoration(  
-            icon: const Icon(Icons.home),  
-            hintText: ' Enter your address',  
-            labelText: 'Address',  
-            
-            ),  
-             validator: (value) {  
-              if (value!.isEmpty) {  
-                return 'Please enter your address';  
-              }  
-              return null;  
-            },  
-           ),  
+      
+      
+      
+       body: SingleChildScrollView(
+         child: Container(child: 
+         Form(  
+             key: _formKey,  
+             child: Column(  
+          crossAxisAlignment: CrossAxisAlignment.start,  
+          children: <Widget>[  
             TextFormField(  
-              controller: _wasteAmnt,
-            decoration: const InputDecoration(  
-            icon: const Icon(Icons.monitor_weight_rounded),
-            hintText: 'Amount of Waste',  
-            labelText: ' Weight in kilograms',  
-            ),  
-             validator: (value) {  
-              if (value!.isEmpty) {  
-                return 'Please enter waste amount';  
-              }  
-              return null;  
-            },  
-           ),  
-
-
- TextFormField(  
-   controller: _wastetype,
-            decoration: const InputDecoration(  
-            icon: const Icon(Icons.delete), 
-            hintText: 'waste_type Waste category',  
-            labelText: 'Waste type',  
-            
-            ),  
-          
-             validator: (value) {  
-              if (value!.isEmpty) {  
-                return 'Please enter waste type';  
-              }  
-              return null;  
-            },  
-           ),  
-TextFormField(  
-              controller:_descrip,
-            decoration: const InputDecoration(  
-            icon: const Icon(Icons.code),  
-            hintText: ' Description(Optional)',  
-            labelText: 'description',  
-            
-            ),  
-          
-             validator: (value) {  
-              if (value!.isEmpty) {  
-                return 'Please enter waste type';  
-              }  
-              return null;  
-            },  
-           ),  
-           
-    /* DropDownFormField(
-                onValueChanged: (dynamic value) {
-                  category_id= value;
-                },
-                value: category_id,
-                required: false,
-                hintText: 'Choose waste type',
-                labelText: 'Waste type',
-                items: category,
-              ), */
-
-          new Container(  
-              padding: const EdgeInsets.only(left: 120.0, top: 40.0),  
-              child: new RaisedButton(  
-                child: const Text('Place order'),  
-                  onPressed: (){
-                     if (_formKey.currentState!.validate()) {  
-                    // If the form is valid, display a Snackbar.
-                     showDialog(context: context, builder: (contxt)
-              {
-                     return AlertDialog(
-                       shape:RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(10)
-                       ),
-                      title:Text('Order Successfull'),
-                      content: Text('Your order has been placed successfully'),
-                      actions: [
-                        FlatButton(onPressed: (){
-                          Navigator.of(contxt).pop();
-                        }, child: Text('Cancel')),
-                         FlatButton(onPressed: (){
-                        _name.text='';
-                        _phone.text='';
-                        _address.text='';
-                        _wasteAmnt.text='';
-                        _wastetype.text='';
-                        _descrip.text='';
-                          Navigator.of(contxt).pop();
-                        }, child: Text('OK'))
-                      ],
-                     );
-              });
-                     createData(_name.text,_phone.text,_address.text,_wasteAmnt.text,_wastetype.text,_descrip.text);
-                    Scaffold.of(context)  
-                        .showSnackBar(SnackBar(content: Text('Data is in processing.'))); 
-                        
-                     }
+              controller: _name,
+              decoration: const InputDecoration(  
+                icon: const Icon(Icons.person),  
+                hintText: ' Enter your name',  
+                labelText: 'Name',
                   
-                  },  
-              )),  
-        ],  
-      ),  
+              ),  
+               validator: (value) {  
+                if (value!.isEmpty) {  
+                  return 'Please enter your name';  
+                }  
+                return null;  
+              },  
+            ),  
+            TextFormField(  
+            controller: _phone,
+              decoration: const InputDecoration(  
+                icon: const Icon(Icons.phone),  
+                hintText: ' enter your phone number',  
+                labelText: 'Phone',  
+              ),  
+               validator: (value) {  
+                if (value!.isEmpty) {  
+                  return 'Please valid phone number';  
+                }  
+                return null;  
+              },  
+             ),  
+              
+            TextFormField(  
+              controller: _address,
+              decoration: const InputDecoration(  
+              icon: const Icon(Icons.home),  
+              hintText: ' Enter your address',  
+              labelText: 'Address',  
+              
+              ),  
+               validator: (value) {  
+                if (value!.isEmpty) {  
+                  return 'Please enter your address';  
+                }  
+                return null;  
+              },  
+             ),  
+              TextFormField(  
+                controller: _wasteAmnt,
+              decoration: const InputDecoration(  
+              icon: const Icon(Icons.monitor_weight_rounded),
+              hintText: 'Amount of Waste',  
+              labelText: ' Weight in kilograms',  
+              ),  
+               validator: (value) {  
+                if (value!.isEmpty) {  
+                  return 'Please enter waste amount';  
+                }  
+                return null;  
+              },  
+             ),  
+       
+       
+        TextFormField(  
+          controller: _wastetype,
+              decoration: const InputDecoration(  
+              icon: const Icon(Icons.delete), 
+              hintText: 'waste_type Waste category',  
+              labelText: 'Waste type',  
+              
+              ),  
+            
+               validator: (value) {  
+                if (value!.isEmpty) {  
+                  return 'Please enter waste type';  
+                }  
+                return null;  
+              },  
+             ),  
+       TextFormField(  
+                controller:_descrip,
+              decoration: const InputDecoration(  
+              icon: const Icon(Icons.code),  
+              hintText: ' Description(Optional)',  
+              labelText: 'description',  
+              
+              ),  
+            
+               validator: (value) {  
+                if (value!.isEmpty) {  
+                  return 'Please enter waste type';  
+                }  
+                return null;  
+              },  
+             ),  
+             
+           /* DropDownFormField(
+                  onValueChanged: (dynamic value) {
+                    category_id= value;
+                  },
+                  value: category_id,
+                  required: false,
+                  hintText: 'Choose waste type',
+                  labelText: 'Waste type',
+                  items: category,
+                ), */
+       
+            new Container(  
+                padding: const EdgeInsets.only(left: 120.0, top: 40.0),  
+                child: new RaisedButton(  
+                  child: const Text('Place order'),  
+                    onPressed: (){
+                       if (_formKey.currentState!.validate()) {  
+                      // If the form is valid, display a Snackbar.
+                       showDialog(context: context, builder: (contxt)
+                {
+                       return AlertDialog(
+                         shape:RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(10)
+                         ),
+                        title:Text('Order Successfull'),
+                        content: Text('Your order has been placed successfully'),
+                        actions: [
+                          FlatButton(onPressed: (){
+                            Navigator.of(contxt).pop();
+                          }, child: Text('Cancel')),
+                           FlatButton(onPressed: (){
+                          _name.text='';
+                          _phone.text='';
+                          _address.text='';
+                          _wasteAmnt.text='';
+                          _wastetype.text='';
+                          _descrip.text='';
+                            Navigator.of(contxt).pop();
+                          }, child: Text('OK'))
+                        ],
+                       );
+                });
+                       createData(_name.text,_phone.text,_address.text,_wasteAmnt.text,_wastetype.text,_descrip.text);
+                      Scaffold.of(context)  
+                          .showSnackBar(SnackBar(content: Text('Data is in processing.'))); 
+                          
+                       }
+
+                       FlatButton(onPressed:(){}, child:Text(''));
+                    
+                    },  
+                )),  
+          ],  
+             ),  
+         ),
+              
+                 
+             ),
        ),
-      ),
+          
       )
     );
   }
