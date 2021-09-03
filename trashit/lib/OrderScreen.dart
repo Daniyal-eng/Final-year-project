@@ -152,7 +152,7 @@ createData(String user_name , String user_phone , String user_address,String was
           controller: _wastetype,
               decoration: const InputDecoration(  
               icon: const Icon(Icons.delete), 
-              hintText: 'waste_type Waste category',  
+              hintText: 'Waste category',  
               labelText: 'Waste type',  
               
               ),  
@@ -169,13 +169,13 @@ createData(String user_name , String user_phone , String user_address,String was
               decoration: const InputDecoration(  
               icon: const Icon(Icons.code),  
               hintText: ' Description(Optional)',  
-              labelText: 'description',  
+              labelText: 'Description',  
               
               ),  
             
                validator: (value) {  
                 if (value!.isEmpty) {  
-                  return 'Please enter waste type';  
+                  return 'Please your description';  
                 }  
                 return null;  
               },  
@@ -193,7 +193,7 @@ createData(String user_name , String user_phone , String user_address,String was
                 ), */
        
             new Container(  
-                padding: const EdgeInsets.only(left: 120.0, top: 40.0),  
+                padding: const EdgeInsets.only(left: 120.0, top: 20.0),  
                 child: new RaisedButton(  
                   child: const Text('Place order'),  
                     onPressed: (){

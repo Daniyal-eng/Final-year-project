@@ -1,13 +1,11 @@
-import 'package:Trashit/AdsScreen.dart';
-import 'package:Trashit/Authenticate.dart';
-import 'package:Trashit/HomeScreen.dart';
-import 'package:Trashit/OrderScreen.dart';
-import 'package:Trashit/PriceList.dart';
-import 'package:Trashit/choice.dart';
-import 'package:Trashit/login.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trashit/HomeScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'dart:async';
+
+import 'package:trashit/login.dart';
 
 
 Future main() async {
@@ -105,12 +103,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
          
-
-
 );
   }
 }
-
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

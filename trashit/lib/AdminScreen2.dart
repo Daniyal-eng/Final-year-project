@@ -1,47 +1,28 @@
-
-import 'dart:math';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trashit/Ads.dart';
 import 'package:trashit/Methods.dart';
-import 'package:trashit/AdsScreen.dart';
-import 'package:trashit/OrderScreen.dart';
-import 'package:trashit/PriceList.dart';
-//import 'package:trashit/PriceList.dart';
+import 'package:trashit/Orders.dart';
+import 'package:trashit/Users.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({ Key? key }) : super(key: key);
+class AdminScr extends StatefulWidget {
+  const AdminScr({ Key? key }) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _AdminScrState createState() => _AdminScrState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-
-  String? uid;
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
-  void getUserId() async { 
-  final User user = await auth.currentUser!; 
-  uid = user.uid;
-  print("User Id Yeh Hai : "+uid.toString()); }
-
-       
+class _AdminScrState extends State<AdminScr> {
   @override
-  void initState() {
-        getUserId();
-    super.initState();
-    //_tabController = TabController(vsync: this, length: myTabs.length);
-  }
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
+                     appBar: AppBar(
        centerTitle:true,
        backgroundColor: Colors.lightGreen,
-        title: Text("Home Screen",style: TextStyle(color: Colors.black),),
+        title: Text("Admin Screen",style: TextStyle(color: Colors.black),),
         actions: [
           GestureDetector(
               onTap:(){
-         logOut(context);
+         AddminlogOut(context);
           },
            child: Padding(padding: EdgeInsets.only(right: 5),
             child: Icon(Icons.logout_outlined,size: 30,color: Colors.black,
@@ -50,10 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
             )
         ]//actions
     ), 
-         
-         //Appbar code
-         
-           body:
+
+                         body:
               SingleChildScrollView(
                 child: Column(
                   children: [
@@ -70,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[             
                            const ListTile(
                             leading: Icon(Icons.list_alt_rounded, size: 50),
-                            title: Text('Price List', style: TextStyle(color: Colors.white)),
-                            subtitle: Text('Here you can see rates', style: TextStyle(color: Colors.white)),
+                            title: Text('Users List', style: TextStyle(color: Colors.white)),
+                            subtitle: Text('Here you can see users list', style: TextStyle(color: Colors.white)),
                           ),
                         
               
@@ -82,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: const Text('View', style: TextStyle(color: Colors.white)),
                                 onPressed: () {
                                     Navigator.push(context, 
-                                    MaterialPageRoute(builder: (_) => ProductList()));                     
+                                    MaterialPageRoute(builder: (_) =>userdata()));                     
                                 },
                               ),
               /*                 FlatButton(
@@ -111,8 +90,8 @@ Container(
                     children: <Widget>[             
                            const ListTile(
                             leading: Icon(Icons.shop,size: 50),
-                            title: Text('Order', style: TextStyle(color: Colors.white)),
-                            subtitle: Text('Here you can place your order', style: TextStyle(color: Colors.white)),
+                            title: Text('Orders list', style: TextStyle(color: Colors.white)),
+                            subtitle: Text('Here you see orders placed', style: TextStyle(color: Colors.white)),
                           ),
                         
               
@@ -120,10 +99,10 @@ Container(
                           child: ButtonBar(
                             children: <Widget>[
                               FlatButton(
-                                child: const Text('Open', style: TextStyle(color: Colors.white)),
+                                child: const Text('View', style: TextStyle(color: Colors.white)),
                                 onPressed: () {
                                     Navigator.push(context, 
-                                    MaterialPageRoute(builder: (_) => OrderScr()));                     
+                                    MaterialPageRoute(builder: (_) => OrdsLst()));                     
                                 },
                               ),
               /*                 FlatButton(
@@ -152,8 +131,8 @@ Container(
                     children: <Widget>[             
                            const ListTile(
                             leading: Icon(Icons.tv, size: 50),
-                            title: Text('Post Ads ', style: TextStyle(color: Colors.white)),
-                            subtitle: Text('Here you can post your Ad', style: TextStyle(color: Colors.white)),
+                            title: Text('Ads list ', style: TextStyle(color: Colors.white)),
+                            subtitle: Text('Here you can see Ads posted', style: TextStyle(color: Colors.white)),
                           ),
                         
               
@@ -161,10 +140,10 @@ Container(
                           child: ButtonBar(
                             children: <Widget>[
                               FlatButton(
-                                child: const Text('Open', style: TextStyle(color: Colors.white)),
+                                child: const Text('View', style: TextStyle(color: Colors.white)),
                                 onPressed: () {
                                     Navigator.push(context, 
-                                    MaterialPageRoute(builder: (_) => AdsScreen()));                     
+                                    MaterialPageRoute(builder: (_) => AdsLst()));                     
                                 },
                               ),
               /*                 FlatButton(
@@ -182,7 +161,10 @@ Container(
                       SizedBox(height: 10,),
                   ],
                 ),
-              ),    
-      );
+              ),  
+
+
+
+    );
   }
 }

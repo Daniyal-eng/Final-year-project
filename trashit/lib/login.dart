@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:Trashit/CreateAccount.dart';
-import 'package:Trashit/HomeScreen.dart';
+import 'package:trashit/AdminLog.dart';
+
+import 'package:trashit/Authenticate.dart';
+
+import 'package:trashit/CreateAccount.dart';
+import 'package:trashit/HomeScreen.dart';
 import 'Methods.dart';
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,12 +14,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
-  bool isLoading = false;
 
+  bool isLoading = false;
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       //appBar: AppBar(
         // centerTitle: true,
        //title:Text('TrashIt'),
@@ -35,16 +41,16 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: size.height / 5,
+                    height: size.height / 20,
                   ),
-                  /*   Container(
+                    Container(
                       width: MediaQuery.of(context).size.width,
                       child:Image.asset(
-                        'assets/images/logo.png',
+                        'assets/logo.png',
                         width: 100,
                         height:100,  
                       ),            
-                      )  */
+                      ) , 
                    /* Container(
                     alignment: Alignment.centerLeft,
                     width: size.width / 0.5,
@@ -52,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
                   ), */
                   SizedBox(
-                    height: size.height / 50,
+                    height: size.height / 20,
                   ),
                   Container(
                     width: size.width / 1.1,
@@ -76,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height / 10,
+                    height: size.height /10,
                   ),
                   Container(
                     width: size.width,
@@ -88,17 +94,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       width: size.width,
                       alignment: Alignment.center,
-                      child: field(size, "password", Icons.lock, _password),
+                        child: passfield(size, "password", Icons.lock, _password),
                     ),
                   ),
                    SizedBox(
-                    height: size.height / 15,
+                    height: size.height / 25,
                   ),
                    
                   customButton(size),
                   SizedBox(
-                    height: size.height / 20,
+                    height: size.height / 30,
                   ),
+                   
+                 customButton2(size),
+                  SizedBox(
+                    height: size.height / 30,
+                  ),
+                  
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => CreateAccount())),
@@ -131,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text('You are signed in');
                setState(() {
                 isLoading = false;
+               
               }); 
                Navigator.push(
                    context, MaterialPageRoute(builder: (_) => HomeScreen()));
@@ -189,9 +202,9 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Container(
           height: size.height / 14,
-          width: size.width / 1.1,
+          width: size.width / 1.7,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(25),
             color: Colors.lightGreen,
           ),
           alignment: Alignment.center,
@@ -205,6 +218,64 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
     );
   }
+
+  
+
+  Widget customButton2(Size size){
+       return GestureDetector(
+        onTap:() {
+          Navigator.push(
+                   context, MaterialPageRoute(builder: (_) => AadminScreen()));
+                  
+        },
+child: Container(
+          height: size.height / 14,
+          width: size.width / 1.7,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.lightGreen,
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            "Admin Login",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
+       );
+  }
+ Widget passfield(
+      Size size, String hintText, IconData icon, TextEditingController cont) {
+    return Container(
+      height: size.height / 14,
+      width: size.width / 1.1,
+      child: TextField(
+        controller: cont,       
+        obscureText: _isObscure,
+        obscuringCharacter: '.',
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon),
+          suffixIcon: IconButton(
+            icon: Icon(_isObscure ?Icons.visibility : Icons.visibility_off),
+            onPressed: (){
+              setState(() {
+                _isObscure =!_isObscure;
+              });
+            },
+          ),
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        ),
+      ),
+    );
+  }
+
+
   Widget field(
       Size size, String hintText, IconData icon, TextEditingController cont) {
     return Container(
@@ -217,7 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(25),
           ),
         ),
       ),

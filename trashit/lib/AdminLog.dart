@@ -1,54 +1,35 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:trashit/HomeScreen.dart';
+import 'package:trashit/AdminLog.dart';
+import 'package:trashit/AdminScreen2.dart';
+import 'package:trashit/Authenticate.dart';
 import 'Methods.dart';
 
-class CreateAccount extends StatefulWidget {
+class AadminScreen extends StatefulWidget {
+  const AadminScreen({ Key? key }) : super(key: key);
+
   @override
-  _CreateAccountState createState() => _CreateAccountState();
+  _AadminScreenState createState() => _AadminScreenState();
 }
 
-class _CreateAccountState extends State<CreateAccount> {
-
-  TextEditingController _name = TextEditingController();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  //TextEditingController _type =TextEditingController();
-
-  FirebaseAuth auth = FirebaseAuth.instance;
-
+class _AadminScreenState extends State<AadminScreen> {
+  final TextEditingController _email2 = TextEditingController();
+  final TextEditingController _password2 = TextEditingController();
   bool isLoading = false;
   bool _isObscure = true;
-  createData(String name , String email , String pass) async {
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc();
-    Map<String , dynamic> users = {
-    "name": name,
-    "email": email,
-    "password": pass,
-    };
-    print("Data Saved Hogya Mera");
-    documentReference.set(users).whenComplete(() {
-       print("$users Created");
-        }); 
-        }
-
-    
-
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
+final size = MediaQuery.of(context).size;
     return Scaffold(
-        /*   appBar: AppBar(
-         centerTitle: true,
-       title:Text('Signup')
-     ,
-       backgroundColor: Color(0XFF1fc709),
+      backgroundColor: Colors.white,
+      //appBar: AppBar(
+        // centerTitle: true,
+       //title:Text('TrashIt'),
+       //backgroundColor: Color(0XFF1fc709),
        //#1fc709
-     ), */
+             
+     //),
       body: isLoading
-       ? Center(
+          ? Center(
               child: Container(
                 height: size.height / 20,
                 width: size.height / 20,
@@ -68,24 +49,22 @@ class _CreateAccountState extends State<CreateAccount> {
                         width: 100,
                         height:100,  
                       ),            
-                      ) ,
-                 /*  Container(
+                      ) , 
+                   /* Container(
                     alignment: Alignment.centerLeft,
                     width: size.width / 0.5,
                     child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios), onPressed: (){
-
-                        }),
+                        icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
                   ), */
                   SizedBox(
-                    height: size.height / 50,
+                    height: size.height / 20,
                   ),
                   Container(
                     width: size.width / 1.1,
                     child: Text(
-                      "Welcome",
+                      "Welcome to Admin Login",
                       style: TextStyle(
-                        fontSize: 34,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -93,101 +72,78 @@ class _CreateAccountState extends State<CreateAccount> {
                   Container(
                     width: size.width / 1.1,
                     child: Text(
-                      "Create Account to Contiue!",
+                      "Sign In to Contiue!",
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: size.height / 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 18.0),
-                    child: Container(
-                      width: size.width,
-                      alignment: Alignment.center,
-                      child: field(size, "Full Name", Icons.account_box, _name),
-                    ),
+                    height: size.height /10,
                   ),
                   Container(
                     width: size.width,
                     alignment: Alignment.center,
-                    child: field(size, "email", Icons.account_box, _email),
+                    child: field(size, "admin@gmail.com", Icons.account_box, _email2),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 18.0),
-                    child: Container(
-                      
-                      width: size.width,
-                      alignment: Alignment.center,
-                     child: passfield(size, "password", Icons.lock, _password,
-                      
-                      ),
-                    ),
-                  ),
-                 /*  SizedBox(
-                    height: size.height / 10,
-                  ), */
-                 /*  Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Container(
                       width: size.width,
                       alignment: Alignment.center,
-                      child: field(size, "Vendor/User", Icons.person_add_sharp,_type),
+                        child: passfield(size, "password", Icons.lock, _password2),
                     ),
-                  ), */
-                  SizedBox(
-                    height: size.height / 15,
                   ),
+                   SizedBox(
+                    height: size.height / 25,
+                  ),
+                   
                   customButton(size),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          color: Colors.lightGreen,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
+                  SizedBox(
+                    height: size.height / 30,
+                  ),
+             
+                /*   GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => CreateAccount())),
+                    child: Text(
+                      "don't have an account?",
+                      style: TextStyle(
+                        color: Colors.lightGreen,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  )
+                  ) */
                 ],
               ),
             ),
     );
   }
-    Widget customButton(Size size) {
+
+
+  Widget customButton(Size size) {
     return GestureDetector(
       onTap: () {
-        if (_name.text.isNotEmpty &&
-            _email.text.isNotEmpty &&
-            _password.text.isNotEmpty
-            ) {
-          setState(() {
+        if (_email2.text.isNotEmpty && _password2.text.isNotEmpty) {
+         setState(() {
             isLoading = true;
-          });
-        
-          createAccount(_name.text, _email.text, _password.text,).then((user) {
+          }); 
+              
+          AdminlogIn(_email2.text, _password2.text).then((user) {
             if (user != null) {
-              setState(() {
+              print("Login Sucessfull");
+              Text('You are signed in');
+               setState(() {
                 isLoading = false;
-              });
-              createData(_name.text , _email.text , _password.text,);
+               
+              }); 
                Navigator.push(
-                   context, MaterialPageRoute(builder: (_) => HomeScreen()));
-              print("Account Created Sucessfull");
-
+                   context, MaterialPageRoute(builder: (_) => AdminScr()));
             } else {
-              print("SignUp Failed");              
-              setState(() {
-                isLoading = false;
-              });
+              print("Login Failed");
               showDialog(context: context, builder: (contxt)
               {
                      return AlertDialog(
@@ -201,69 +157,79 @@ class _CreateAccountState extends State<CreateAccount> {
                           Navigator.of(contxt).pop();
                         }, child: Text('Cancel')),
                          FlatButton(onPressed: (){
-                        _email.text='';
-                        _password.text='';
+                        _email2.text='';
+                        _password2.text='';
                           Navigator.of(contxt).pop();
                         }, child: Text('OK'))
                       ],
                      );
+              }
+              );
+              setState(() {
+                isLoading = false;
               });
             }
           });
         } else {
-          print("Please enter Fields");showDialog(context: context, builder: (contxt)
+          print("Please fill form correctly");
+          showDialog(context: context, builder: (contxt)
               {
                      return AlertDialog(
                        shape:RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(25)
+                         borderRadius: BorderRadius.circular(15)
                        ),
                       title:Text('Error'),
-                      content: Text('Please fill all the fields'),
+                      content: Text('Please provide email & password'),
                       actions: [
                         FlatButton(onPressed: (){
                           Navigator.of(contxt).pop();
                         }, child: Text('Cancel')),
                          FlatButton(onPressed: (){
-                        _email.text='';
-                        _password.text='';
+                        _email2.text='';
+                        _password2.text='';
                           Navigator.of(contxt).pop();
                         }, child: Text('OK'))
                       ],
                      );
-              });
-          //Text('Please filled all the fields');
-        }
+              }
+              );
+        } 
       },
       child: Container(
-          height: size.height / 12,
-          width: size.width / 1.5,
+          height: size.height / 14,
+          width: size.width / 1.7,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color: Colors.lightGreen,
           ),
           alignment: Alignment.center,
           child: Text(
-            "Create Account",
+            "Login",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           )),
     );
   }
-Widget passfield(
+
+
+
+
+
+ Widget passfield(
       Size size, String hintText, IconData icon, TextEditingController cont) {
     return Container(
       height: size.height / 14,
       width: size.width / 1.1,
       child: TextField(
-        controller: cont,
+        controller: cont,       
         obscureText: _isObscure,
         obscuringCharacter: '.',
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
-           suffixIcon: IconButton(
+          suffixIcon: IconButton(
             icon: Icon(_isObscure ?Icons.visibility : Icons.visibility_off),
             onPressed: (){
               setState(() {
@@ -280,7 +246,11 @@ Widget passfield(
       ),
     );
   }
-  Widget mailfield(
+
+
+
+
+   Widget field(
       Size size, String hintText, IconData icon, TextEditingController cont) {
     return Container(
       height: size.height / 14,
@@ -297,27 +267,6 @@ Widget passfield(
         ),
       ),
     );
-   
-    
 }
- Widget field(
-      Size size, String hintText, IconData icon, TextEditingController cont) {
-    return Container(
-      height: size.height / 14,
-      width: size.width / 1.1,
-      child: TextField(
-        controller: cont,
-        decoration: InputDecoration(
-          prefixIcon: Icon(icon),
-          hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-        ),
-      ),
-    );
-   
-    
-}
+
 }
