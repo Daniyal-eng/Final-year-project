@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trashit/AdminLog.dart';
 import 'package:trashit/AdminScreen2.dart';
 import 'package:trashit/Authenticate.dart';
+import 'package:trashit/login.dart';
 import 'Methods.dart';
 
 class AadminScreen extends StatefulWidget {
@@ -12,22 +15,49 @@ class AadminScreen extends StatefulWidget {
 }
 
 class _AadminScreenState extends State<AadminScreen> {
-  final TextEditingController _email2 = TextEditingController();
+  late final TextEditingController _email2 = TextEditingController();
   final TextEditingController _password2 = TextEditingController();
+  String AdNam='daniyaladmin@gmail.com';
+  String AdPass='daniyaladmin';
+
+  
+
+FirebaseAuth auth = FirebaseAuth.instance;
+createData(String email , String pass) async {
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('Admins').doc(aid);
+    Map<String , dynamic> Admins = {
+    
+    "email": email,
+    "password": pass,
+    };
+    print("Admin ka Data Saved Hogya Mera");
+    documentReference.set(Admins).whenComplete(() {
+       print("$Admins Created");
+        }); 
+        }
+        String ?aid;
+ void getAdminId() async { 
+  final User user = await auth.currentUser!; 
+  aid = user.uid;
+  print("User Id Yeh Hai : "+aid.toString()); }
+
+       
+  @override
+  void initState() {
+        getAdminId();
+    super.initState();
+    
+  }
+
   bool isLoading = false;
   bool _isObscure = true;
+  
   @override
   Widget build(BuildContext context) {
 final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
-      //appBar: AppBar(
-        // centerTitle: true,
-       //title:Text('TrashIt'),
-       //backgroundColor: Color(0XFF1fc709),
-       //#1fc709
-             
-     //),
+      
       body: isLoading
           ? Center(
               child: Container(
@@ -50,12 +80,7 @@ final size = MediaQuery.of(context).size;
                         height:100,  
                       ),            
                       ) , 
-                   /* Container(
-                    alignment: Alignment.centerLeft,
-                    width: size.width / 0.5,
-                    child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
-                  ), */
+                  
                   SizedBox(
                     height: size.height / 20,
                   ),
@@ -105,25 +130,133 @@ final size = MediaQuery.of(context).size;
                     height: size.height / 30,
                   ),
              
-                /*   GestureDetector(
+                  GestureDetector(
                     onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => CreateAccount())),
+                        MaterialPageRoute(builder: (_) => LoginScreen())),
                     child: Text(
-                      "don't have an account?",
+                      " back",
                       style: TextStyle(
                         color: Colors.lightGreen,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ) */
+                  ) 
                 ],
               ),
             ),
     );
   }
 
+   
+   Widget customButton(Size size){
+    return GestureDetector(
+       onTap: (
+       ){
+          if (_email2.text.isNotEmpty && _password2.text.isNotEmpty) {
+         setState(() {
+            isLoading = true;
+          }); 
+            
+           if( _email2.text == AdNam && _password2.text==AdPass ){
+             Navigator.push(
+                   context, MaterialPageRoute(builder: (_) => AdminScr()));  
+                       print("Admin Login Sucessfull");
+           } //2nd if 
+                   else{
+                     print("Login Failed");
+                     setState(() {
+                isLoading = false;
+              });
+                     showDialog(context: context, builder: (contxt){
 
+                       return AlertDialog(
+                           shape:RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(15)
+                       ),
+                       title:Text('Error'),
+                      content: Text('Wrong email or password'),
+                      actions: [
+                         FlatButton(onPressed: (){
+                          Navigator.of(contxt).pop();
+                        }, child: Text('Cancel')),
+                         FlatButton(onPressed: (){
+                        _email2.text='';
+                        _password2.text='';
+                          Navigator.of(contxt).pop();
+                        }, child: Text('OK'))
+                      ],
+                       );
+                     }); // ShowDialog
+                   }
+                  
+           }    
+            
+            else {
+          print("Please enter all Fields");
+          showDialog(context: context, builder: (contxt)
+              {
+                     return AlertDialog(
+                       shape:RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(25)
+                       ),
+                      title:Text('Error'),
+                      content: Text('Please fill all the fields'),
+                      actions: [
+                        FlatButton(onPressed: (){
+                          Navigator.of(contxt).pop();
+                        }, child: Text('Cancel')),
+                         FlatButton(onPressed: (){
+                        _email2.text='';
+                        _password2.text='';
+                          Navigator.of(contxt).pop();
+                        }, child: Text('OK'))
+                      ],
+                     );
+              });
+          //Text('Please filled all the fields');
+        }
+
+
+
+
+
+       },child:Container(
+          height: size.height / 14,
+          width: size.width / 1.7,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.lightGreen,
+          )  ,
+          alignment: Alignment.center,
+          child: Text(
+            "Admin Login",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
+              
+    );
+     
+             
+   }
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
   Widget customButton(Size size) {
     return GestureDetector(
       onTap: () {
@@ -132,7 +265,7 @@ final size = MediaQuery.of(context).size;
             isLoading = true;
           }); 
               
-          AdminlogIn(_email2.text, _password2.text).then((user) {
+           if( _email2.text == AdNam && _password2.text==AdPass ) {
             if (user != null) {
               print("Login Sucessfull");
               Text('You are signed in');
@@ -140,6 +273,7 @@ final size = MediaQuery.of(context).size;
                 isLoading = false;
                
               }); 
+              createData( _email2.text , _password2.text,);
                Navigator.push(
                    context, MaterialPageRoute(builder: (_) => AdminScr()));
             } else {
@@ -213,7 +347,7 @@ final size = MediaQuery.of(context).size;
           )),
     );
   }
-
+ */
 
 
 

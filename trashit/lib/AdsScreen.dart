@@ -17,13 +17,13 @@ class _AdsScreenState extends State<AdsScreen> {
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
    TextEditingController _address = TextEditingController();
-      TextEditingController _wasteAmnt = TextEditingController();
+  TextEditingController _wasteAmnt = TextEditingController();
   TextEditingController _wastetype = TextEditingController();
  TextEditingController _descrip = TextEditingController();
   
   
 createData(String user_name , String user_phone , String user_address,String waste_amount,String waste_type,String descrip) async {
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('Ads').doc(uid);
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('Ads').doc();
     Map<String , dynamic> Ads = {
     "name": user_name,
     "phone number": user_phone,
@@ -179,17 +179,7 @@ createData(String user_name , String user_phone , String user_address,String was
                 return null;  
               },  
              ),  
-             
-           /* DropDownFormField(
-                  onValueChanged: (dynamic value) {
-                    category_id= value;
-                  },
-                  value: category_id,
-                  required: false,
-                  hintText: 'Choose waste type',
-                  labelText: 'Waste type',
-                  items: category,
-                ), */
+           
        
             new Container(  
                 padding: const EdgeInsets.only(left: 120.0,top:40 ),  
@@ -220,7 +210,8 @@ createData(String user_name , String user_phone , String user_address,String was
                           }, child: Text('OK'))
                         ],
                        );
-                });
+                }
+              );
                       // If the form is valid, display a Snackbar.
                        createData(_name.text,_phone.text,_address.text,_wasteAmnt.text,_wastetype.text,_descrip.text);
                       Scaffold.of(context)  

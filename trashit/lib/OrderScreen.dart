@@ -24,7 +24,7 @@ class _OrderScrState extends State<OrderScr> {
 
 
 createData(String user_name , String user_phone , String user_address,String waste_amount,String waste_type,String descrip) async {
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('orders').doc(uid);
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('orders').doc();
     Map<String , dynamic> orders = {
     "name": user_name,
     "phone number": user_phone,

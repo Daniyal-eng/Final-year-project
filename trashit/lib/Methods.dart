@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trashit/AdminLog.dart';
+import 'package:trashit/AdminScreen2.dart';
 import 'package:trashit/login.dart';
 
 
@@ -104,3 +105,4 @@ else{
     print("error");
   }
 }
+

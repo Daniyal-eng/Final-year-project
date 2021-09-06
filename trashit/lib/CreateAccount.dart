@@ -14,6 +14,7 @@ class _CreateAccountState extends State<CreateAccount> {
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+   //TextEditingController _confirmPass = TextEditingController();
   //TextEditingController _type =TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -40,13 +41,7 @@ class _CreateAccountState extends State<CreateAccount> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-        /*   appBar: AppBar(
-         centerTitle: true,
-       title:Text('Signup')
-     ,
-       backgroundColor: Color(0XFF1fc709),
-       //#1fc709
-     ), */
+      
       body: isLoading
        ? Center(
               child: Container(
@@ -128,6 +123,8 @@ class _CreateAccountState extends State<CreateAccount> {
                       ),
                     ),
                   ),
+
+                  
                  /*  SizedBox(
                     height: size.height / 10,
                   ), */
@@ -183,7 +180,10 @@ class _CreateAccountState extends State<CreateAccount> {
                    context, MaterialPageRoute(builder: (_) => HomeScreen()));
               print("Account Created Sucessfull");
 
-            } else {
+            } //2nd if 
+
+
+            else {
               print("SignUp Failed");              
               setState(() {
                 isLoading = false;
@@ -207,11 +207,14 @@ class _CreateAccountState extends State<CreateAccount> {
                         }, child: Text('OK'))
                       ],
                      );
-              });
+              });// ShowDialog
             }
-          });
-        } else {
-          print("Please enter Fields");showDialog(context: context, builder: (contxt)
+          }
+          ); // create Data
+        } //1st if
+        
+         else {
+          print("Please enter all Fields");showDialog(context: context, builder: (contxt)
               {
                      return AlertDialog(
                        shape:RoundedRectangleBorder(
@@ -252,6 +255,35 @@ class _CreateAccountState extends State<CreateAccount> {
           )),
     );
   }
+  Widget Conpassfield(
+      Size size, String hintText, IconData icon, TextEditingController Ccont) {
+    return Container(
+      height: size.height / 14,
+      width: size.width / 1.1,
+      child: TextField(
+        controller: Ccont,
+        obscureText: _isObscure,
+        obscuringCharacter: '.',
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon),
+           suffixIcon: IconButton(
+            icon: Icon(_isObscure ?Icons.visibility : Icons.visibility_off),
+            onPressed: (){
+              setState(() {
+                _isObscure =!_isObscure;
+              });
+            },
+          ),
+          hintText: hintText,
+          // labelText: 'Retype Password',
+          hintStyle: TextStyle(color: Colors.grey),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        ),
+      ),
+    );
+  }
 Widget passfield(
       Size size, String hintText, IconData icon, TextEditingController cont) {
     return Container(
@@ -272,6 +304,7 @@ Widget passfield(
             },
           ),
           hintText: hintText,
+          
           hintStyle: TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),

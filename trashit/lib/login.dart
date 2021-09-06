@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                          borderRadius: BorderRadius.circular(15)
                        ),
                       title:Text('Error'),
-                      content: Text('Please provide valid email & password'),
+                      content: Text('Wrong email or password'),
                       actions: [
                         FlatButton(onPressed: (){
                           Navigator.of(contxt).pop();
