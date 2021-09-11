@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+
 class AdsLst extends StatefulWidget {
    
   const AdsLst({ Key? key }) : super(key: key);
@@ -20,7 +21,7 @@ class _AdsLstState extends State<AdsLst> {
   
   
    DeleteData()async{
-    DocumentReference documentReference =FirebaseFirestore.instance.collection('Ads').doc('p0a1IVJRxSBf6trNTV99');
+    DocumentReference documentReference = await FirebaseFirestore.instance.collection('Ads').doc(uid);
   
   documentReference.delete().whenComplete(()  {
     //print("$ads deleted");
@@ -28,9 +29,9 @@ class _AdsLstState extends State<AdsLst> {
    }
 
 
-
-createData(String userName , String userPhone , String userAddress,String wasteAmount,String wasteType,String descrip,) async {
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('Complete').doc(uid);
+  
+createData(String id,String userName , String userPhone , String userAddress,String wasteAmount,String wasteType,String descrip,) async {
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('Complete').doc(id);
     Map<String , dynamic> compl = {
     
     "name": userName,
@@ -41,7 +42,10 @@ createData(String userName , String userPhone , String userAddress,String wasteA
     "Additional text":descrip,
      };
     print("Ad pora hogaya gya");
-    documentReference.set(compl).whenComplete(() {
+    documentReference.set(compl).whenComplete(() async {
+
+        DocumentReference documentReference2 = await FirebaseFirestore.instance.collection('Ads').doc(id);
+         documentReference2.delete();
        print("$compl placed");
         }); 
         }
@@ -52,13 +56,16 @@ createData(String userName , String userPhone , String userAddress,String wasteA
   void getUserId() async { 
   final User user = await auth.currentUser!; 
   uid = user.uid;
-  print("Admin Id Yeh Hai : "+uid.toString()); }
+  print("Admin/vendor Id Yeh Hai : "+uid.toString()); }
+  
 
   @override
   void initState() { 
     getUserId();
     super.initState();
   } 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,8 +133,8 @@ createData(String userName , String userPhone , String userAddress,String wasteA
                               Text(snapshot.data!.docs[index]['phone number']),
                             ],
                           ),
-                          Text('-------------------------------------------------'),
-                          Container(
+                          Text('-------------------------------------------'),
+                           Container(
                             child:new RaisedButton(onPressed: (){
                                showDialog(context: context, builder: (contxt)
                 {
@@ -144,27 +151,20 @@ createData(String userName , String userPhone , String userAddress,String wasteA
                            FlatButton(onPressed: (){
                                      
                             Navigator.of(contxt).pop();
-                            createData((snapshot.data!.docs[index]['name']),snapshot.data!.docs[index]['phone number'],snapshot.data!.docs[index]['address'],snapshot.data!.docs[index]['Amount of waste'],snapshot.data!.docs[index]['Waste category'],snapshot.data!.docs[index]['Additional text'],);
+                            createData((snapshot.data!.docs[index]['id']),(snapshot.data!.docs[index]['name']),snapshot.data!.docs[index]['phone number'],snapshot.data!.docs[index]['address'],snapshot.data!.docs[index]['Amount of waste'],snapshot.data!.docs[index]['Waste category'],snapshot.data!.docs[index]['Additional text'],);
                                       
-                              DeleteData();                         
-                          }, child: Text('OK'))
-                
-
-                        ],
-                        
+                            //  DeleteData();                         
+                          }, child: Text('OK'))              
+                        ],                       
                        );
-                }
-                               
-                                
+                }          
                                  );  
-                            },//child: const Text('Mark as complete')),
+                            },child: const Text('Mark as complete')),
                           ), 
-                         
-                          )],
-                           
-                        
-                      
-                      );
+                        ]
+                          ); 
+                          
+                            
                       }
                       );
                   }

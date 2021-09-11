@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:trashit/HomeScreen.dart';
 import 'Methods.dart';
 
+
 class CreateAccount extends StatefulWidget {
   @override
   _CreateAccountState createState() => _CreateAccountState();
@@ -136,9 +137,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: field(size, "Vendor/User", Icons.person_add_sharp,_type),
                     ),
                   ), */
-                  SizedBox(
-                    height: size.height / 15,
-                  ),
+                 
                   customButton(size),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -238,10 +237,10 @@ class _CreateAccountState extends State<CreateAccount> {
         }
       },
       child: Container(
-          height: size.height / 12,
+          height: size.height / 14,
           width: size.width / 1.5,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(30),
             color: Colors.lightGreen,
           ),
           alignment: Alignment.center,
@@ -286,13 +285,28 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 Widget passfield(
       Size size, String hintText, IconData icon, TextEditingController cont) {
+    
     return Container(
-      height: size.height / 14,
+      height: size.height / 9,
       width: size.width / 1.1,
-      child: TextField(
+      child: TextFormField(
+        maxLength: 8,
+        autocorrect: true,
         controller: cont,
         obscureText: _isObscure,
         obscuringCharacter: '.',
+
+      /*   validator: FieldValidator.password(
+        minLength: 8,
+        shouldContainNumber: true,
+        shouldContainCapitalLetter: true,
+        shouldContainSmallLetter: true,
+        shouldContainSpecialChars: true,
+        errorMessage: "Password must match the required format",
+        isNumberNotPresent: () { return "Password must contain number"; },
+        isSpecialCharsNotPresent: () { return "Password must contain special characters"; },
+        isCapitalLetterNotPresent: () { return "Password must contain capital letters"; }
+        ), */
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
            suffixIcon: IconButton(
@@ -307,7 +321,7 @@ Widget passfield(
           
           hintStyle: TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(28),
           ),
         ),
       ),
@@ -319,10 +333,11 @@ Widget passfield(
       height: size.height / 14,
       width: size.width / 1.1,
       child: TextField(
+        keyboardType: TextInputType.emailAddress,
         controller: cont,
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
-          hintText: hintText,
+          hintText: "Email",
           hintStyle: TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),

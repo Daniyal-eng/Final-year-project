@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.trashit">
+     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
    <application
         android:label="trashit"
         android:icon="@mipmap/launcher_icon">
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -37,6 +40,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            
+             <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDkNJHIbWYIke4Jo30guEdJ-hKFXThA5S4"/> 
+        
     </application>
     <!---
     <uses-permision android:name="android.permission.INTERNET"/>-->

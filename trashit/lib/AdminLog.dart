@@ -174,7 +174,7 @@ final size = MediaQuery.of(context).size;
                            shape:RoundedRectangleBorder(
                          borderRadius: BorderRadius.circular(15)
                        ),
-                       title:Text('Error'),
+                      title:Text('Error'),
                       content: Text('Wrong email or password'),
                       actions: [
                          FlatButton(onPressed: (){

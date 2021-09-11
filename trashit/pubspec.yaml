@@ -31,7 +31,13 @@ dependencies:
   cloud_firestore: 
   google_sign_in: ^5.0.7
   google_sign_in_web: ^0.10.0+2
-
+  google_maps_flutter: ^2.0.6
+  geolocator: ^7.6.0
+  url_launcher: ^6.0.10
+  location: ^4.3.0
+  flutter_polyline_points: ^1.0.0
+  location_web: ^3.1.1
+  the_validator: ^2.0.0 
 
 dev_dependencies:
   flutter_test:

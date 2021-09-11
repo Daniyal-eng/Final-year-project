@@ -1,8 +1,11 @@
 
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trashit/Methods.dart';
+import 'package:location/location.dart';
 
 
 class AdsScreen extends StatefulWidget {
@@ -21,9 +24,14 @@ class _AdsScreenState extends State<AdsScreen> {
   TextEditingController _wastetype = TextEditingController();
  TextEditingController _descrip = TextEditingController();
   
+       late bool _serviceEnabled;
+       late PermissionStatus _permissionGranted;
+      
+
   
 createData(String user_name , String user_phone , String user_address,String waste_amount,String waste_type,String descrip) async {
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('Ads').doc();
+           var Id = generateRandomString(20);
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('Ads').doc(Id);
     Map<String , dynamic> Ads = {
     "name": user_name,
     "phone number": user_phone,
@@ -31,13 +39,29 @@ createData(String user_name , String user_phone , String user_address,String was
     "Amount of waste": waste_amount,
     "Waste category":waste_type,
     "Additional text":descrip,
+    "id":Id,
      };
     print("Ad lg gya");
     documentReference.set(Ads).whenComplete(() {
        print("$Ads placed");
         }); 
         }
-  
+
+
+
+  String generateRandomString(int len) {
+  var r = Random();
+  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+
+}
+
+
+
+
+
+
+
   String? uid;
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -87,6 +111,8 @@ createData(String user_name , String user_phone , String user_address,String was
           crossAxisAlignment: CrossAxisAlignment.start,  
           children: <Widget>[  
             TextFormField(  
+                            keyboardType: TextInputType.text,
+
               controller: _name,
               decoration: const InputDecoration(  
                 icon: const Icon(Icons.person),  
@@ -102,10 +128,13 @@ createData(String user_name , String user_phone , String user_address,String was
               },  
             ),  
             TextFormField(  
+                               keyboardType: TextInputType.number,
+
             controller: _phone,
-              decoration: const InputDecoration(  
+              decoration: const InputDecoration(
+                
                 icon: const Icon(Icons.phone),  
-                hintText: ' enter your phone number',  
+                hintText: ' Enter your phone number',  
                 labelText: 'Phone',  
               ),  
                validator: (value) {  
@@ -115,22 +144,7 @@ createData(String user_name , String user_phone , String user_address,String was
                 return null;  
               },  
              ),  
-              
-            TextFormField(  
-              controller: _address,
-              decoration: const InputDecoration(  
-              icon: const Icon(Icons.home),  
-              hintText: ' Enter your address',  
-              labelText: 'Address',  
-              
-              ),  
-               validator: (value) {  
-                if (value!.isEmpty) {  
-                  return 'Please enter your address';  
-                }  
-                return null;  
-              },  
-             ),  
+          
               TextFormField(  
                 controller: _wasteAmnt,
               decoration: const InputDecoration(  
@@ -147,7 +161,9 @@ createData(String user_name , String user_phone , String user_address,String was
              ),  
        
        
-        TextFormField(  
+        TextFormField( 
+                        keyboardType: TextInputType.text,
+ 
           controller: _wastetype,
               decoration: const InputDecoration(  
               icon: const Icon(Icons.delete), 
@@ -163,7 +179,9 @@ createData(String user_name , String user_phone , String user_address,String was
                 return null;  
               },  
              ),  
-       TextFormField(  
+       TextFormField( 
+                       keyboardType: TextInputType.text,
+ 
                 controller:_descrip,
               decoration: const InputDecoration(  
               icon: const Icon(Icons.code),  
@@ -179,10 +197,61 @@ createData(String user_name , String user_phone , String user_address,String was
                 return null;  
               },  
              ),  
-           
+               
+            TextFormField( 
+                      
+ 
+              controller: _address,
+              decoration: const InputDecoration(  
+              icon: const Icon(Icons.home),  
+              hintText: ' Enter your address',  
+              labelText: 'Address',  
+              
+              
+              ),  
+               validator: (value) {  
+                if (value!.isEmpty) {  
+                  return 'Please enter your address';  
+                }  
+                return null;  
+              },  
+             ),  
+             
+   Container(
+     height: 60,
+     child: Padding(
+       padding: const EdgeInsets.only(left: 80.0, top: 20.0), 
        
+         child: RaisedButton(onPressed: () async {
+            late LocationData _locationData;
+                  Location location = new Location();
+                  location.enableBackgroundMode(enable: true);
+
+
+             _serviceEnabled = await location.serviceEnabled();
+               if (!_serviceEnabled) {
+                       _serviceEnabled = await location.requestService();
+               if (!_serviceEnabled) {
+                      return;
+                          }
+                    }
+
+_permissionGranted = await location.hasPermission();
+if (_permissionGranted == PermissionStatus.denied) {
+  _permissionGranted = await location.requestPermission();
+  if (_permissionGranted != PermissionStatus.granted) {
+          return;
+  }
+}
+                  _locationData = await location.getLocation();
+                _address.text = " ${_locationData.latitude} , ${_locationData.longitude}";
+                // _address="$_locationData.latitude" ,_"$locationData.longitude";
+                   },child:Text('Send your location')),
+       
+     ),
+   ),
             new Container(  
-                padding: const EdgeInsets.only(left: 120.0,top:40 ),  
+                padding: const EdgeInsets.only(left: 120.0,top:20 ),  
                 child: new RaisedButton(  
                   child: const Text('Post Ad'),  
                     onPressed: (){

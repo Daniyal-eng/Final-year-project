@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trashit/CreateAccount.dart';
 import 'package:trashit/HomeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:trashit/location_tracking.dart';
 import 'dart:async';
 
 import 'package:trashit/login.dart';
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,    
        home:SplashScreen(),
+
     );
   }
 }
