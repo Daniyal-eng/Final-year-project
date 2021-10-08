@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "437727945007",
+    "project_id": "trashitapp-ea2f8",
+    "storage_bucket": "trashitapp-ea2f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437727945007:android:aa04674301d9be402141da",
+        "android_client_info": {
+          "package_name": "com.example.trashit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437727945007-4b33kf4hnm36ri1vtnm6litsu7j8ttvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkNJHIbWYIke4Jo30guEdJ-hKFXThA5S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437727945007-4b33kf4hnm36ri1vtnm6litsu7j8ttvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
